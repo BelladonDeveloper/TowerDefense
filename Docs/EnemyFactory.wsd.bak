@@ -1,0 +1,60 @@
+@startuml
+EnemuItem --> IEnemy
+EnemuItem --> Monobehaviour
+Enemy --> EnemyType
+EnemyConstructorSO --> ScriptableObject
+EnemyConstructorSO --|{ Enemy
+EnemyCreator --|{ EnemuItem
+EnemyCreator o-- EnemyConstructorSO
+EnemyCreator --> Monobehaviour
+EnemySpawn o-- EnemyCreator
+EnemySpawn --> Monobehaviour
+EnemySpawn --|{ Wave
+Wave --|{ EnemyType
+
+interface IEnemy
+{
+    void Attack()
+}
+
+class Enemy
+{
+    +EnemyType type
+    ... Parameters...
+}
+
+class EnemuItem
+{
+    -Enemy enemy
+}
+
+class EnemyCreator
+{
+    +List<GameObject> Prefabs
+    -EnemyConstructorSO constructor
+    +TheEnemy CreateEnemy(EnemyType type)
+}
+
+enum EnemyType
+{
+
+}
+
+class EnemyConstructorSO
+{
+    +List<Enemy> Enemies
+    +void GetEnemyByType(EnemyType type)
+}
+
+class EnemySpawn
+{
+    +List<Wave> waves
+}
+
+class Wave
+{
+    List<EnemyType> _types
+    List<int> _countOfType
+}
+
+@enduml
